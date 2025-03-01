@@ -62,6 +62,13 @@ public class Main {
             
         }
 
+        /*
+        System.out.println(survive);
+        for(int  j = 0; j< L; j++){
+            System.out.println(Arrays.toString(located[j]));
+        }
+        */
+
         for(int i = 0; i<Q; i++){
             st = new StringTokenizer(br.readLine());
             int is = Integer.parseInt(st.nextToken());
@@ -82,11 +89,11 @@ public class Main {
                 }
             }
 
-
-            //System.out.println(survive);
-            //for(int  j = 0; j< L; j++){
-            //    System.out.println(Arrays.toString(located[j]));
-            //}
+            /*
+            System.out.println(survive);
+            for(int  j = 0; j< L; j++){
+                System.out.println(Arrays.toString(located[j]));
+            }*/
         }
 
 
@@ -103,49 +110,27 @@ public class Main {
 
     static void charge(int num, Soldier s){
         for(int x = s.x1; x<= s.x2; x++){
-                for(int y = s.y1; y<=s.y2; y++){
-                    located[x][y] = num;
-                }
+            for(int y = s.y1; y<=s.y2; y++){
+                located[x][y] = num;
             }
+        }
     }
 
-    static void charge2(Soldier s, int dir, boolean attacked){
+    static void move(Soldier s, int dir){
         int nextX1 = s.x1, nextX2 = s.x2, nextY1 = s.y1, nextY2 = s.y2;
 
         if(dir == 0){
             nextX1 = s.x1-1;
             nextX2 = s.x2-1;
-            for(int y = s.y1; y <= s.y2; y++){
-                located[s.x2][y] = 0;
-            }
         }else if(dir == 1){
             nextY1 = s.y1+1;
             nextY2 = s.y2+1;
-            for(int x = s.x1; x <= s.x2; x++){
-                located[x][s.y1] = 0;
-            }
         }else if(dir == 2){
             nextX1 = s.x1+1;
             nextX2 = s.x2+1;
-            for(int y = s.y1; y <= s.y2; y++){
-                located[s.x1][y] = 0;
-            }
         }else { // if(dir == 3)
             nextY1 = s.y1-1;
             nextY2 = s.y2-1;
-            for(int x = s.x1; x <= s.x2; x++){
-                located[x][s.y2] = 0;
-            }
-        }
-
-        int damage = 0;
-        for(int x = nextX1; x <= nextX2; x++){
-            for(int y = nextY1; y <= nextY2; y++){
-                located[x][y] = s.num;
-                if(board[x][y] == 1){   
-                    damage ++;
-                }
-            }
         }
 
         s.x1 = nextX1;
@@ -153,11 +138,6 @@ public class Main {
         s.y1 = nextY1;
         s.y2 = nextY2;
 
-        if(attacked){
-            s.damaged += damage;
-        }else{
-
-        }
     }
 
     static void order(int is, int dir){
@@ -172,16 +152,47 @@ public class Main {
             return;
         }
 
-        while(moveList.size() > 1){
+
+        Set<Integer> movedSet = new HashSet<>();
+        while(moveList.size() > 0){
             Soldier pop = moveList.pollLast();
-            charge2(pop, dir, true);
+            move(pop, dir);
+            if(moveList.size() == 0){
+                movedSet.add(-1 * pop.num);
+            }else{
+                movedSet.add(pop.num);
+            }
         }
 
+        located = new int[L][];
+        for(int i = 0; i<L; i++){
+            located[i] = new int[L];
+        }
+        
+        for(int key : survive.keySet()){
+            Soldier g = survive.get(key);
+            if(g.k > g.damaged){
+                if(movedSet.contains(g.num)){
+                    charge2(g, key < 0 ? false : true);
+                }else{
+                    charge(g.num, g);
+                }
+            }
+        }
+    }
 
-        Soldier pop = moveList.pollLast();
-        charge2(pop, dir, false);
+    static void charge2(Soldier s, boolean trapped){
+        int damaged = 0;
+        for(int x = s.x1; x<= s.x2; x++){
+            for(int y = s.y1; y<=s.y2; y++){
+                located[x][y] = s.num;
 
-
+                if(board[x][y] == 1 && trapped){
+                    damaged++;
+                }
+            }
+        }
+        s.damaged += damaged;
     }
 
     static Deque<Soldier> canMove(int is, int dir){
@@ -190,6 +201,7 @@ public class Main {
         Deque<Soldier> moveList = new LinkedList<>();
         Queue<Soldier> queue = new LinkedList<>();
         queue.add(s);
+        HashSet<Integer> set = new HashSet<>();
         while(!queue.isEmpty()){
             Soldier cur = queue.poll();
             //System.out.println(cur);
@@ -200,7 +212,6 @@ public class Main {
             int y1 = cur.y1;
             int y2 = cur.y2;
 
-            HashSet<Integer> set = new HashSet<>();
 
             if(dir == 0){
                 for(int y = y1; y <= y2; y++){
