@@ -81,8 +81,10 @@ public class Main {
 
                 Stuck last = beltRear[from].left;
                 Stuck first = beltHead[from].right;
-
+                
                 if(last.num == -1 || first.num == -1){
+                    //System.out.println(last.num);
+                    //System.out.println(first.num);
                     bw.write(stuckCount[to] + "\n");
                     continue;
                 }
@@ -136,13 +138,24 @@ public class Main {
                     beltHead[from].right.addFront(dstFirst);
                     beltHead[to].right.addFront(srcFirst);
                 }
+                
+                /*
+                for(int i = 1; i<=n; i++){
+                    Stuck cur2 = beltHead[i];
+                    while(cur2.right != null){
+                        System.out.print(cur2.num + ", " );
+                        cur2 = cur2.right;
+                    }
+                    System.out.println();
+                }
+                */
 
                 bw.write(stuckCount[to] + "\n");
             }else if(op == 400){
                 int from = Integer.parseInt(st.nextToken());
                 int to = Integer.parseInt(st.nextToken());
 
-                if(stuckCount[from] == 1){
+                if(stuckCount[from] <= 1){ // 살수부 , ==0 -> <=1
                     bw.write(stuckCount[to] + "\n");
                     continue;
                 }
@@ -169,16 +182,7 @@ public class Main {
                 stuckCount[to] += max;
 
                 bw.write(stuckCount[to] + "\n");
-                /*
-                for(int i = 1; i<=n; i++){
-                    Stuck cur2 = beltHead[i];
-                    while(cur2.right != null){
-                        System.out.print(cur2.num + ", " );
-                        cur2 = cur2.right;
-                    }
-                    System.out.println();
-                }
-                */
+                              
 
             }else if(op == 500){
                 int pnum = Integer.parseInt(st.nextToken());
