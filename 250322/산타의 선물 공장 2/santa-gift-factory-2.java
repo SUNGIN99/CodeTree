@@ -82,7 +82,7 @@ public class Main {
                 Stuck last = beltRear[from].left;
                 Stuck first = beltHead[from].right;
 
-                if(last.num == -1){
+                if(last.num == -1 || first.num == -1){
                     bw.write(stuckCount[to] + "\n");
                     continue;
                 }
