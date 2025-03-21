@@ -26,6 +26,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
         int q = Integer.parseInt(st.nextToken());
 
         int n = 0, m = 0;
@@ -93,7 +95,7 @@ public class Main {
                 beltHead[to].right = first;
                 first.left= beltHead[to];
 
-                System.out.println(stuckCount[to]);
+                bw.write(stuckCount[to] + "\n");
             }else if(op == 300){
                 int from = Integer.parseInt(st.nextToken());
                 int to = Integer.parseInt(st.nextToken());
@@ -130,7 +132,7 @@ public class Main {
                     beltHead[to].right.addFront(srcFirst);
                 }
 
-                System.out.println(stuckCount[to]);
+                bw.write(stuckCount[to] + "\n");
             }else if(op == 400){
                 int from = Integer.parseInt(st.nextToken());
                 int to = Integer.parseInt(st.nextToken());
@@ -148,19 +150,19 @@ public class Main {
                 Stuck srcFirst = beltHead[from].right;
                 Stuck dstFirst = beltHead[to].right;
                 
-                beltHead[to].right = srcFirst;
-                srcFirst.left = beltHead[to];
-
                 beltHead[from].right = cur.right;
                 cur.right.left = beltHead[from];
                 
+                beltHead[to].right = srcFirst;
+                srcFirst.left = beltHead[to];
+
                 dstFirst.left = cur;
                 cur.right = dstFirst;
 
                 stuckCount[from] -= max;
                 stuckCount[to] += max;
 
-                System.out.println(stuckCount[to]);
+                bw.write(stuckCount[to] + "\n");
                 /*
                 for(int i = 1; i<=n; i++){
                     Stuck cur2 = beltHead[i];
@@ -184,7 +186,7 @@ public class Main {
                     b = stuck.right.num;
                 }
 
-                System.out.println(a + 2* b);
+                bw.write((a + 2* b) + "\n");
 
             }else if(op == 600){
                 int pnum = Integer.parseInt(st.nextToken());
@@ -197,8 +199,10 @@ public class Main {
                     b= beltRear[pnum].left.num;
                 }
 
-                System.out.println(a + 2*b + 3*c);
+                bw.write((a + 2*b + 3*c) + "\n");
             }
         }
+        bw.flush();
+        bw.close();
     }
 }
