@@ -79,9 +79,6 @@ public class Main {
                 int from = Integer.parseInt(st.nextToken());
                 int to = Integer.parseInt(st.nextToken());
 
-                stuckCount[to] += stuckCount[from];
-                stuckCount[from] = 0;
-
                 Stuck last = beltRear[from].left;
                 Stuck first = beltHead[from].right;
 
@@ -98,6 +95,9 @@ public class Main {
 
                 beltHead[to].right = first;
                 first.left= beltHead[to];
+
+                stuckCount[to] += stuckCount[from];
+                stuckCount[from] = 0;
 
                 bw.write(stuckCount[to] + "\n");
             }else if(op == 300){
