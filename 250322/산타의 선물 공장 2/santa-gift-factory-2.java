@@ -83,6 +83,7 @@ public class Main {
                 Stuck first = beltHead[from].right;
 
                 if(last.num == -1){
+                    bw.write(stuckCount[to] + "\n");
                     continue;
                 }
 
@@ -142,6 +143,7 @@ public class Main {
                 int to = Integer.parseInt(st.nextToken());
 
                 if(stuckCount[from] == 1){
+                    bw.write(stuckCount[to] + "\n");
                     continue;
                 }
 
