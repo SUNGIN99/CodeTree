@@ -63,24 +63,22 @@ public class Main {
 
         int minute = 0;
         boolean isCool = false;
-        while(true){
+        while(minute <= 100){
             wind();
 
             mix();
 
             outWall();
 
-            minute++;
-
-            isCool = checkCool();
-            
+            minute++;    
+            isCool = checkCool();        
             if(isCool){
                 break;
             }
             //break;
         }
 
-        System.out.println(minute);
+        System.out.println(minute > 100 ? -1 : minute);
     }
 
     static HashMap<String, boolean[]> wall = new HashMap<>();
