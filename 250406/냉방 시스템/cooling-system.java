@@ -77,6 +77,7 @@ public class Main {
             if(isCool){
                 break;
             }
+            //break;
         }
 
         System.out.println(minute);
@@ -150,6 +151,21 @@ public class Main {
                             mixCool[i][j+1] += dif;
                         }
                     }
+                }
+            }
+        }
+        
+
+        for(int j = 0; j<n - 1; j++){
+            Block b = blocked[n-1][j];
+            if(!b.right){
+                int dif = Math.abs(cool[n-1][j+1] - cool[n-1][j]) / 4;
+                if(cool[n-1][j] < cool[n-1][j+1]){
+                    mixCool[n-1][j] += dif;
+                    mixCool[n-1][j+1] -= dif;
+                }else if(cool[n-1][j] > cool[n-1][j+1]){
+                    mixCool[n-1][j] -= dif;
+                    mixCool[n-1][j+1] += dif;
                 }
             }
         }
@@ -280,7 +296,7 @@ public class Main {
                         }
 
                         if(isValid(r-1, c) && isValid(r-1, c+1)){
-                            Block sideB1 = blocked[r+1][c];
+                            Block sideB1 = blocked[r-1][c];
                             if(!sideB1.bottom && !sideB1.right){
                                 newCool[r-1][c+1] = newCool[r][c] - 1;
                             }
