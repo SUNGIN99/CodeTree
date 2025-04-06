@@ -65,11 +65,6 @@ public class Main {
         boolean isCool = false;
         while(minute <= 100){
             wind();
-            //if(minute == 0){
-                //for(int i = 0; i<n; i++){
-                    //System.out.println(Arrays.toString(cool[i]));
-                //}
-            //}
 
             mix();
 
@@ -82,6 +77,11 @@ public class Main {
             }
             //break;
         }
+
+        
+        //for(int i = 0; i<n; i++){
+            //System.out.println(Arrays.toString(cool[i]));
+        //}    
 
         System.out.println(minute > 100 ? -1 : minute);
     }
@@ -112,7 +112,18 @@ public class Main {
             }
         }   
 
+        // 실수 한 부분.,,..,,.
+        /*
         for(int i = 0; i<n; i++){
+            if(cool[i][0] != 0){
+                cool[i][0] --;
+            }
+            if(cool[i][n-1] != 0){
+                cool[i][n-1] --;
+            }
+        }
+        */
+        for(int i = 1; i<n-1; i++){
             if(cool[i][0] != 0){
                 cool[i][0] --;
             }
@@ -182,8 +193,13 @@ public class Main {
         }
     }
 
-    
+    static int[][] freshCool;
     static void wind(){
+        freshCool = new int[n][];
+        for(int i = 0; i<n; i++){
+            freshCool[i] = new int[n];
+        }
+
         for(int key : aircon.keySet()){
             for(int[] b : aircon.get(key)){
                 int x = b[0];
