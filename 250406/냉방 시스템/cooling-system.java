@@ -46,11 +46,11 @@ public class Main {
             int s = Integer.parseInt(st.nextToken());
 
             if(s == 0){
-                blocked[x-1][y].bottom = true;
                 blocked[x][y].top = true;
+                blocked[x-1][y].bottom = true;
             }else if(s == 1){
-                blocked[x][y-1].right = true;
                 blocked[x][y].left = true;
+                blocked[x][y-1].right = true;
             }
             //System.out.println(blocked[x][y].left + ", "  +blocked[x][y].top);
         }
@@ -65,6 +65,11 @@ public class Main {
         boolean isCool = false;
         while(minute <= 100){
             wind();
+            //if(minute == 0){
+                //for(int i = 0; i<n; i++){
+                    //System.out.println(Arrays.toString(cool[i]));
+                //}
+            //}
 
             mix();
 
@@ -196,7 +201,7 @@ public class Main {
             newCool[i] = new int[n];
         }
 
-        int curx= x;
+        int curx = x;
         int cury = y;
         if(dir == 2){ // 왼
             cury = y -1;
@@ -219,15 +224,14 @@ public class Main {
                         
                         if(isValid(r-1, c) && isValid(r-1, c-1)){
                             Block sideB1 = blocked[r-1][c];
-                            if(!sideB1.top && !sideB1.left){
+                            if(!sideB1.bottom && !sideB1.left){
                                 newCool[r-1][c-1] = newCool[r][c] - 1;
                             }
                         }
-
                         
                         if(isValid(r+1, c) && isValid(r+1, c-1)){
                             Block sideB2 = blocked[r+1][c];
-                            if(!sideB2.bottom && !sideB2.left){
+                            if(!sideB2.top && !sideB2.left){
                                 newCool[r+1][c-1] = newCool[r][c] - 1;
                             }
                         }
@@ -237,7 +241,6 @@ public class Main {
                 row++;
                 col++;
             }
-
         }else if(dir == 3){ // 위
             curx = x - 1;
             newCool[curx][cury] += 5;
