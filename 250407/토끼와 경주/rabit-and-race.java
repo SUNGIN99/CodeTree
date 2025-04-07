@@ -39,7 +39,7 @@ public class Main {
                 rab.d *= d;
 
             }else if(op == 400){
-                int maxScore = 0;
+                Long maxScore = Long.valueOf(0);
                 //System.out.println(rabbits);
                 //System.out.println();
                 for(int key: rabbits.keySet()){
@@ -60,7 +60,7 @@ public class Main {
 
     }
 
-    static HashMap<Integer, Integer> makeScore = new HashMap<>();
+    static HashMap<Integer, Long> makeScore = new HashMap<>();
     static void race(int k, int s){
         PriorityQueue<Rabbit> queue = new PriorityQueue<>();
         for(int key : rabbits.keySet()){
@@ -94,8 +94,8 @@ public class Main {
             rab.y = jumped.y;
             rab.jump ++;
 
-            int soccur = makeScore.getOrDefault(pid, 0);
-            soccur += (rab.x + + rab.y + 2);
+            Long soccur = makeScore.getOrDefault(pid, Long.valueOf(0));
+            soccur += (Long.valueOf(rab.x) + Long.valueOf(rab.y) + 2);
             makeScore.put(pid, soccur);
             
             queue.add(rab);
@@ -215,7 +215,7 @@ public class Main {
         int x, y;
         int pid;
         int d;
-        int score;
+        Long score;
 
         Rabbit(int j, int x, int y, int nu, int d){
             this.jump = j;
@@ -223,7 +223,7 @@ public class Main {
             this.y = y;
             this.pid = nu;
             this.d = d;
-            this.score = 0;
+            this.score = Long.valueOf(0);
         }
 
         public int compareTo(Rabbit r){
