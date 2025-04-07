@@ -4,7 +4,6 @@ import java.io.*;
 public class Main {
 
     static int n, m, p;
-    static ArrayList<Rabbit>[][] matrix;
     static HashMap<Integer, Rabbit> rabbits = new HashMap<>();
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,13 +18,6 @@ public class Main {
                 n = Integer.parseInt(st.nextToken());
                 m = Integer.parseInt(st.nextToken());
                 p = Integer.parseInt(st.nextToken());
-                matrix = new ArrayList[n][];
-                for(int i = 0; i<n; i++){
-                    matrix[i] = new ArrayList[m];
-                    for(int j = 0; j<m; j++){
-                        matrix[i][j] = new ArrayList<>();
-                    }
-                }
 
                 for(int i = 0; i<p; i++){
                     int pid = Integer.parseInt(st.nextToken());
@@ -33,7 +25,6 @@ public class Main {
 
                     Rabbit rab = new Rabbit(0, 0, 0, pid, d);
                     rabbits.put(pid, rab);
-                    matrix[0][0].add(rab);
                 }
                 
             }else if(op == 200){
