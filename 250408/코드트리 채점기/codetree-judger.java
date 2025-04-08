@@ -42,6 +42,9 @@ public class Main {
     static HashMap<String, Domain> history = new HashMap<>();
     static PriorityQueue<Integer> waitingJudge = new PriorityQueue<>();
     static PriorityQueue<Domain> waiting = new PriorityQueue<>();
+
+    static HashMap<String, Domain> sameDomainJudge = new HashMap<>();
+    static Map<Integer, ArrayList<Domain>> gapDomain = new TreeMap<>();
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -52,6 +55,7 @@ public class Main {
             int op = Integer.parseInt(st.nextToken());
 
             if(op == 100){
+                count = 1;
                 n = Integer.parseInt(st.nextToken());
                 String url = st.nextToken();
                 String[] u = url.split("/");
@@ -66,6 +70,7 @@ public class Main {
             }else if(op == 200){
                 int t = Integer.parseInt(st.nextToken());
                 int p = Integer.parseInt(st.nextToken());
+                timeGood(t);
                 String url = st.nextToken();
                 String[] u = url.split("/");
 
@@ -74,29 +79,27 @@ public class Main {
                 if(!urls.containsKey(url)){
                     waiting.add(dom);
                     urls.put(url, dom);
+                    count ++;
                 }
                 //System.out.println(waiting);
 
             }else if(op == 300){
                 int t = Integer.parseInt(st.nextToken());
+                timeGood(t);
                 List<Domain> out = new ArrayList<>();
-
                 while(!waiting.isEmpty()){
                     Domain high = waiting.poll();
                     //System.out.println(high);
                     if(judging.containsKey(high.domain)){
-                        out.add(high);
+                        sameDomainJudge.put(high.domain, high);
                     }else{
                         Domain hist = history.get(high.domain);
-
-                        if(hist != null){
-                            //System.out.println(t + ": " +  high + ", " + hist);
-                            //System.out.println(hist.start + 3 * (hist.end - hist.start));
-                            //System.out.println(hist.start + " , " + hist.end);
-                        }
                         
                         if (history.containsKey(high.domain) && t < hist.start + 3 * (hist.end - hist.start)){
-                            out.add(high);
+                            //gapDomain.put(high.domain, high);
+                            ArrayList<Domain> gaps = gapDomain.getOrDefault(hist.start + 3 * (hist.end - hist.start), new ArrayList<>());
+                            gaps.add(high);
+                            gapDomain.put(hist.start + 3 * (hist.end - hist.start), gaps);
                         }else{
                             if(waitingJudge.isEmpty()){
                                 out.add(high);
@@ -110,6 +113,7 @@ public class Main {
                                 judgingJudge.put(wj, high.domain);
 
                                 urls.remove(high.url);
+                                count --;
 
                                 break;
                             }
@@ -126,6 +130,7 @@ public class Main {
 
             }else if(op == 400){
                 int t = Integer.parseInt(st.nextToken());
+                timeGood(t);
                 int jid = Integer.parseInt(st.nextToken());
                 if(judgingJudge.containsKey(jid)){
                     String domain = judgingJudge.get(jid);
@@ -137,16 +142,35 @@ public class Main {
 
                     judgingJudge.remove(jid);
                     judging.remove(domain);
+
+                    if(sameDomainJudge.containsKey(domain)){
+                        waiting.add(sameDomainJudge.get(domain));
+                    }
+
                 }
 
             }else if(op == 500){
                 int t = Integer.parseInt(st.nextToken());
+                timeGood(t);
                 //System.out.println(waiting.size());
-                bw.write(waiting.size()+"\n");
+                bw.write(count+"\n");
             }
         }
 
         bw.flush();
         bw.close();
+    }
+
+    static int count;
+    static void timeGood(int t){
+        for(int key : gapDomain.keySet()){
+            if(key <= t){
+                //System.out.println(gapDomain.get(key));
+                waiting.addAll(gapDomain.get(key));
+                gapDomain.remove(key);
+            }else{
+                break;
+            }
+        }
     }
 }
