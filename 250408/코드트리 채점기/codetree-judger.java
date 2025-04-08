@@ -143,9 +143,9 @@ public class Main {
                     judgingJudge.remove(jid);
                     judging.remove(domain);
 
-                    if(sameDomainJudge.containsKey(domain)){
-                        waiting.add(sameDomainJudge.get(domain));
-                        sameDomainJudge.remove(domain);
+                    if(sameDomainJudge.containsKey(dom.url)){
+                        waiting.add(sameDomainJudge.get(dom.url));
+                        sameDomainJudge.remove(dom.url);
                     }
 
                 }
