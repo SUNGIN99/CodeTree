@@ -163,14 +163,18 @@ public class Main {
 
     static int count;
     static void timeGood(int t){
+        List<Integer> a = new ArrayList<>();
         for(int key : gapDomain.keySet()){
             if(key <= t){
                 //System.out.println(gapDomain.get(key));
                 waiting.addAll(gapDomain.get(key));
-                gapDomain.remove(key);
+                a.add(key);
             }else{
                 break;
             }
+        }
+        for(int aa : a){
+            gapDomain.remove(aa);
         }
     }
 }
