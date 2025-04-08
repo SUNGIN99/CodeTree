@@ -142,7 +142,7 @@ public class Main {
             }else if(op == 500){
                 int t = Integer.parseInt(st.nextToken());
                 //System.out.println(waiting.size());
-                bw.write(wating.size());
+                bw.write(waiting.size());
             }
         }
 
