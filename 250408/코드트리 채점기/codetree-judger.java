@@ -91,7 +91,7 @@ public class Main {
                     Domain high = waiting.poll();
                     //System.out.println(high);
                     if(judging.containsKey(high.domain)){
-                        sameDomainJudge.put(high.domain, high);
+                        sameDomainJudge.put(high.url, high);
                     }else{
                         Domain hist = history.get(high.domain);
                         
