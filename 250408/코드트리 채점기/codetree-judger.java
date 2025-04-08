@@ -149,7 +149,7 @@ public class Main {
                     for(String key : sameDomainJudge.keySet()){
                         Domain sd = sameDomainJudge.get(key);
                         if(sd.domain.equals(domain)){
-                            waiting.add(sameDomainJudge.get(sd));
+                            waiting.add(sd);
                             a.add(sd.url);
                         }
                     }
