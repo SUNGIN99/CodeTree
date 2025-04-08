@@ -45,7 +45,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int qq = Integer.parseInt(st.nextToken());
         for(int q = 0; q<qq; q++){
             st = new StringTokenizer(br.readLine());
@@ -141,8 +141,12 @@ public class Main {
 
             }else if(op == 500){
                 int t = Integer.parseInt(st.nextToken());
-                System.out.println(waiting.size());
+                //System.out.println(waiting.size());
+                bw.write(wating.size());
             }
         }
+
+        bw.flush();
+        bw.close();
     }
 }
