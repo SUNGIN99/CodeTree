@@ -143,9 +143,19 @@ public class Main {
                     judgingJudge.remove(jid);
                     judging.remove(domain);
 
-                    if(sameDomainJudge.containsKey(dom.url)){
-                        waiting.add(sameDomainJudge.get(dom.url));
-                        sameDomainJudge.remove(dom.url);
+
+                    //
+                    List<String> a = new ArrayList<>();
+                    for(String key : sameDomainJudge.keySet()){
+                        Domain sd = sameDomainJudge.get(key);
+                        if(sd.domain.equals(domain)){
+                            waiting.add(sameDomainJudge.get(sd));
+                            a.add(sd.url);
+                        }
+                    }
+
+                    for(String aa : a){
+                        sameDomainJudge.remove(aa);
                     }
 
                 }
