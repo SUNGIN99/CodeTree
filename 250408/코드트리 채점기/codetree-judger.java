@@ -43,7 +43,7 @@ public class Main {
     static PriorityQueue<Integer> waitingJudge = new PriorityQueue<>();
     static PriorityQueue<Domain> waiting = new PriorityQueue<>();
 
-    static HashMap<String, Domain> sameDomainJudge = new HashMap<>();
+    static HashMap<String, ArrayList<Domain>> sameDomainJudge = new HashMap<>();
     static Map<Integer, ArrayList<Domain>> gapDomain = new TreeMap<>();
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -91,7 +91,9 @@ public class Main {
                     Domain high = waiting.poll();
                     //System.out.println(high);
                     if(judging.containsKey(high.domain)){
-                        sameDomainJudge.put(high.url, high);
+                        ArrayList<Domain> sdj = sameDomainJudge.getOrDefault(high.domain, new ArrayList<>());
+                        sdj.add(high);
+                        sameDomainJudge.put(high.domain, sdj);
                     }else{
                         Domain hist = history.get(high.domain);
                         
@@ -145,19 +147,12 @@ public class Main {
 
 
                     //
-                    List<String> a = new ArrayList<>();
-                    for(String key : sameDomainJudge.keySet()){
-                        Domain sd = sameDomainJudge.get(key);
-                        if(sd.domain.equals(domain)){
-                            waiting.add(sd);
-                            a.add(sd.url);
-                        }
+                    List<Domain> a = sameDomainJudge.get(domain);
+                    if(a != null && !a.isEmpty()){
+                        waiting.addAll(a);
+                        sameDomainJudge.remove(domain);
                     }
-
-                    for(String aa : a){
-                        sameDomainJudge.remove(aa);
-                    }
-
+                    
                 }
 
             }else if(op == 500){
