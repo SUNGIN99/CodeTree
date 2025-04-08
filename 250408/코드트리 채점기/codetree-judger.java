@@ -153,7 +153,16 @@ public class Main {
                 int t = Integer.parseInt(st.nextToken());
                 timeGood(t);
                 //System.out.println(waiting.size());
-                bw.write(count+"\n");
+                //bw.write(count+"\n");
+                int sum = waiting.size();
+
+                for(int key : gapDomain.keySet()){
+                    sum += gapDomain.get(key).size();
+                }
+
+                sum += sameDomainJudge.size();
+
+                bw.write(sum+"\n");
             }
         }
 
