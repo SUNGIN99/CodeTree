@@ -145,6 +145,7 @@ public class Main {
 
                     if(sameDomainJudge.containsKey(domain)){
                         waiting.add(sameDomainJudge.get(domain));
+                        sameDomainJudge.remove(domain);
                     }
 
                 }
