@@ -158,7 +158,9 @@ public class Main {
                 if(valid == 0 || valid == 2){
                     leftup = false;
                 }
-                forest[lux][luy] = 0;
+                if(valid == 1){
+                    forest[lux][luy] = 0;
+                }
                 spray[lux][luy] = t;
             }
 
@@ -169,7 +171,9 @@ public class Main {
                 if(valid == 0 || valid == 2){
                     rightup = false;
                 }
-                forest[rux][ruy] = 0;
+                if(valid == 1){
+                    forest[rux][ruy] = 0;
+                }
                 spray[rux][ruy] = t;
             }
 
@@ -180,7 +184,10 @@ public class Main {
                 if(valid == 0 || valid == 2){
                     leftdown = false;
                 }
-                forest[ldx][ldy] = 0;
+                if(valid == 1){
+                    forest[ldx][ldy] = 0;
+                }
+                
                 spray[ldx][ldy] = t;
 
             }
@@ -192,7 +199,10 @@ public class Main {
                 if(valid == 0 || valid == 2){
                     rightdown = false;
                 }
-                forest[rdx][rdy] = 0;
+                if(valid == 1){
+                    forest[rdx][rdy] = 0;
+                }
+                
                 spray[rdx][rdy] = t;
             }
         }
