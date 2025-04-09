@@ -138,6 +138,10 @@ public class Main {
         }
         
         //System.out.println(maxKill + ", " + maxx + ", " + maxy);
+        if(forest[maxx][maxy] == 0){
+            spray[maxx][maxy]= t;
+            return 0;
+        }
 
         forest[maxx][maxy] = 0;
         spray[maxx][maxy]= t;
