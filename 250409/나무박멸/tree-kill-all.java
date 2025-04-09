@@ -74,7 +74,7 @@ public class Main {
 
     static int killer(int t){
         int maxKill = 0;
-        int maxx = n + 1, maxy= n + 1;
+        int maxx = 0, maxy= 0;
         for(int i = 0; i<n; i++){
             for(int j = 0; j<n; j++){
                 if(forest[i][j] == -1 || forest[i][j] == 0){
