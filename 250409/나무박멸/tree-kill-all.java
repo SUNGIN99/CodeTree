@@ -65,7 +65,7 @@ public class Main {
     static void gone(int t){
         for(int i = 0; i<n; i++){
             for(int j = 0; j<n; j++){
-                if(spray[i][j] != 0 && t - spray[i][j] >= m){
+                if(spray[i][j] != 0 && t - spray[i][j] >= c){
                     spray[i][j] = 0;
                 }
             }
