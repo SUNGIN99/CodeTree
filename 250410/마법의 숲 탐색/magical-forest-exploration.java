@@ -109,24 +109,24 @@ public class Main {
             if(x == -2){
                 return isValid(dx + 1, ly);
             }else if(x == -1){
-                return isValid(dx + 1, ly) && isValid(dx+1, ly - 1) && isValid(dx + 1, ly);
+                return isValid(dx + 1, ly) && isValid(dx, ly - 1) && isValid(dx, ly);
             }else if(x == 0){
-                return isValid(dx + 1, ly) && isValid(dx+1, ly - 1) && isValid(dx + 1, ly) && isValid(x, ly - 1);
+                return isValid(dx + 1, ly) && isValid(dx, ly - 1) && isValid(dx, ly) && isValid(x, ly - 1);
             }
 
-            return isValid(dx + 1, ly) && isValid(dx+1, ly - 1) && isValid(dx + 1, ly) && isValid(x, ly - 1) && isValid(ux, ly);
+            return isValid(dx + 1, ly) && isValid(dx, ly - 1) && isValid(dx, ly) && isValid(x, ly - 1) && isValid(ux, ly);
         }
 
         boolean canRight(){
             if(x == -2){
                 return isValid(dx + 1, ry);
             }else if(x == -1){
-                return isValid(dx + 1, ry) && isValid(dx+1, ry + 1) && isValid(dx + 1, ry);
+                return isValid(dx + 1, ry) && isValid(dx, ry + 1) && isValid(dx, ry);
             }else if(x == 0){
-                return isValid(dx + 1, ry) && isValid(dx+1, ry + 1) && isValid(dx + 1, ry) && isValid(x, ry + 1);
+                return isValid(dx + 1, ry) && isValid(dx, ry + 1) && isValid(dx, ry) && isValid(x, ry + 1);
             }
 
-            return isValid(dx + 1, ry) && isValid(dx+1, ry + 1) && isValid(dx + 1, ry) && isValid(x, ry + 1) && isValid(ux, ry);
+            return isValid(dx + 1, ry) && isValid(dx, ry + 1) && isValid(dx, ry) && isValid(x, ry + 1) && isValid(ux, ry);
 
         }
 
