@@ -117,17 +117,20 @@ public class Main {
                 }else{
                     if(warrior[i][j].size() > 0){
                         int[] first = firstMove(i, j);
+                        int[] second = secondMove(first[0], first[1]);
                         //System.out.println(i+" " + j + " -> " + Arrays.toString(first));
+                        int dist1 = Math.abs(i - first[0]) + Math.abs(j - first[1]);
+                        int dist2 = Math.abs(i - second[0]) + Math.abs(j - second[1]);
                         if(first[0] == sr && first[1] == sc){
                             attackedWarriorCount += warrior[i][j].size();
                             movedWarriorCount += warrior[i][j].size();
                             continue;
                         }
 
-                        int[] second = secondMove(first[0], first[1]);
-                        //System.out.println(Arrays.toString(second) + "\n");
-
-                        int dist2 = Math.abs(i - second[0]) + Math.abs(j - second[1]);
+                        if(dist1 == 0){
+                            newWarrior[i][j].addAll(warrior[i][j]);
+                            continue;
+                        }
 
                         if(first[2] < second[2]){
                             movedWarriorCount += warrior[i][j].size();
