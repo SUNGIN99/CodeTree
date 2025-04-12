@@ -722,26 +722,26 @@ public class Main {
             int lefty = y - 1;
             int righty = y + 1;
 
-            if(isValid(upx, y) && (visited[upx][y] == 0 || visited[upx][y] >= dist + 1)){
+            if(isValid(upx, y) && (visited[upx][y] == 0 || visited[upx][y] > dist + 1)){
                 Move next = new Move(upx, y);
                 next.dist = dist + 1;
                 next.path = path + "1";
                 visited[upx][y] = dist + 1;
                 queue.add(next);
             }
-            if(isValid(downx, y) && (visited[downx][y] == 0 || visited[downx][y] >= dist + 1)){
+            if(isValid(downx, y) && (visited[downx][y] == 0 || visited[downx][y] > dist + 1)){
                 Move next = new Move(downx, y);
                 next.dist = dist + 1;
                 next.path = path + "2";
                 visited[downx][y] = dist + 1;
                 queue.add(next);
-            }if(isValid(x, lefty) && (visited[x][lefty] == 0 || visited[x][lefty] >= dist + 1)){
+            }if(isValid(x, lefty) && (visited[x][lefty] == 0 || visited[x][lefty] > dist + 1)){
                 Move next = new Move(x, lefty);
                 next.dist = dist + 1;
                 next.path = path + "3";
                 visited[x][lefty] = dist + 1;
                 queue.add(next);
-            }if(isValid(x, righty) && (visited[x][righty] == 0 || visited[x][righty] >= dist + 1)){
+            }if(isValid(x, righty) && (visited[x][righty] == 0 || visited[x][righty] > dist + 1)){
                 Move next = new Move(x, righty);
                 next.dist = dist + 1;
                 next.path = path + "4";
