@@ -3,9 +3,9 @@ import java.io.*;
 
 public class Main {
 
+    
     static class Warrior{
         int x, y;
-        boolean stoned;
 
         Warrior(int x, int y){
             this.x = x;
@@ -20,7 +20,7 @@ public class Main {
     static int n, m;
     static int sr, sc, er, ec;
     static int[][] matrix;
-    static ArrayList<Warrior>[][] warrior;
+    static int[][] warrior;
     
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,13 +31,10 @@ public class Main {
             m = Integer.parseInt(st.nextToken());
 
             matrix = new int[n][];
-            warrior = new ArrayList[n][];
+            warrior = new int[n][];
             for(int i = 0; i<n; i++){
                 matrix[i] = new int[n];
-                warrior[i] = new ArrayList[n];
-                for(int j = 0; j<n; j++){
-                    warrior[i][j] = new ArrayList<>();
-                }
+                warrior[i] = new int[n];
             }
 
             st = new StringTokenizer(br.readLine());
@@ -50,8 +47,7 @@ public class Main {
             for(int i = 0; i<m; i++){
                 int x = Integer.parseInt(st.nextToken());
                 int y = Integer.parseInt(st.nextToken());
-                Warrior war = new Warrior(x, y);
-                warrior[x][y].add(war);
+                warrior[x][y]++;
             }
 
             for(int i = 0; i<n; i++){
@@ -110,12 +106,9 @@ public class Main {
     static void warriorMove(){
         movedWarriorCount = stonedWarriorCount = attackedWarriorCount = 0;
 
-        ArrayList<Warrior>[][] newWarrior = new ArrayList[n][];
+        int[][] newWarrior = new int[n][];
         for(int i = 0; i<n; i++){
-            newWarrior[i] = new ArrayList[n];
-            for(int j = 0; j<n; j++){
-                newWarrior[i][j] = new ArrayList<>();
-            }
+            newWarrior[i] = new int[n];
             //System.out.println(Arrays.toString(stonedArea[i]));
         }
         
@@ -123,13 +116,13 @@ public class Main {
 
         for(int i = 0; i<n; i++){
             for(int j = 0; j<n; j++){
-                if(warrior[i][j].size() == 0){
+                if(warrior[i][j] == 0){
                     continue;
                 }
 
                 if(stonedWarrior.contains(i + " " + j)){
-                    newWarrior[i][j].addAll(warrior[i][j]);
-                    stonedWarriorCount += warrior[i][j].size();
+                    newWarrior[i][j] += warrior[i][j];
+                    stonedWarriorCount += warrior[i][j];
                 }else{
                     int up1 = i - 1, up2 = i - 2;
                     int down1 = i + 1, down2 = i + 2;
@@ -272,15 +265,12 @@ public class Main {
                     }
 
                     if(nextx == sr && nexty == sc){
-                        attackedWarriorCount += warrior[i][j].size();
-                        movedWarriorCount += warrior[i][j].size() * can;
+                        attackedWarriorCount += warrior[i][j];
+                        movedWarriorCount += warrior[i][j] * can;
                     }else{
-                        movedWarriorCount += warrior[i][j].size() * can;
-                        for(Warrior ws : warrior[i][j]){
-                            ws.x = nextx;
-                            ws.y = nexty;
-                        }
-                        newWarrior[nextx][nexty].addAll(warrior[i][j]);
+                        movedWarriorCount += warrior[i][j] * can;
+                        
+                        newWarrior[nextx][nexty] +=  warrior[i][j];
                     }
                     //System.out.println (i + ", " + j);
                     //System.out.println(dist + ", " + nextx + ", " + nexty + ", " + can);
@@ -331,24 +321,24 @@ public class Main {
         for(Warrior w : lookU){
             int x = w.x;
             int y = w.y;
-            uCount += warrior[x][y].size();
+            uCount += warrior[x][y];
         }
         for(Warrior w : lookD){
             int x = w.x;
             int y = w.y;
 
             //System.out.println(warrior[x][y]);
-            dCount += warrior[x][y].size();
+            dCount += warrior[x][y];
         }
         for(Warrior w : lookL){
             int x = w.x;
             int y = w.y;
-            lCount += warrior[x][y].size();
+            lCount += warrior[x][y];
         }
         for(Warrior w : lookR){
             int x = w.x;
             int y = w.y;
-            rCount += warrior[x][y].size();
+            rCount += warrior[x][y];
         }
 
         int count = uCount;
@@ -393,8 +383,8 @@ public class Main {
         //왼
         for(int j = sc + 1; j < n; j++){
             medusaSeeR[sr][j] = true;
-            if(warrior[sr][j].size() > 0){
-                looked.add(warrior[sr][j].get(0));
+            if(warrior[sr][j] > 0){
+                looked.add(new Warrior(sr, j));
                 break;
             }
         }
@@ -413,8 +403,8 @@ public class Main {
                 medusaSeeR[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i-1;
                     wy = j+1;
                     break;
@@ -439,8 +429,8 @@ public class Main {
                 medusaSeeR[i][j] = true;
                // System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i+1;
                     wy = j+1;
                     break;
@@ -461,8 +451,8 @@ public class Main {
         //왼
         for(int j = sc - 1; j>= 0; j--){
             medusaSeeL[sr][j] = true;
-            if(warrior[sr][j].size() > 0){
-                looked.add(warrior[sr][j].get(0));
+            if(warrior[sr][j] > 0){
+                looked.add(new Warrior(sr, j));
                 break;
             }
         }
@@ -482,8 +472,8 @@ public class Main {
                 medusaSeeL[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i-1;
                     wy = j-1;
                     break;
@@ -507,8 +497,8 @@ public class Main {
                 medusaSeeL[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i+1;
                     wy = j-1;
                     break;
@@ -529,8 +519,8 @@ public class Main {
         //위
         for(int i = sr+1 ; i < n; i++){
             medusaSeeD[i][sc] = true;
-            if(warrior[i][sc].size() > 0){
-                looked.add(warrior[i][sc].get(0));
+            if(warrior[i][sc] > 0){
+                looked.add(new Warrior(i, sc));
                 break;
             }
         }
@@ -549,8 +539,8 @@ public class Main {
                 medusaSeeD[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i+1;
                     wy = j-1;
                     break;
@@ -574,8 +564,8 @@ public class Main {
                 medusaSeeD[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i+1;
                     wy = j+1;
                     break;
@@ -596,8 +586,8 @@ public class Main {
         //위
         for(int i = sr-1 ; i>= 0; i--){
             medusaSeeU[i][sc] = true;
-            if(warrior[i][sc].size() > 0){
-                looked.add(warrior[i][sc].get(0));
+            if(warrior[i][sc] > 0){
+                looked.add(new Warrior(i, sc));
                 break;
             }
         }
@@ -617,8 +607,8 @@ public class Main {
                 medusaSeeU[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i-1;
                     wy = j-1;
                     break;
@@ -641,8 +631,8 @@ public class Main {
                 medusaSeeU[i][j] = true;
                 //System.out.println(i + ", " + j);
 
-                if(warrior[i][j].size() > 0){
-                    looked.add(warrior[i][j].get(0));
+                if(warrior[i][j] > 0){
+                    looked.add(new Warrior(i, j));
                     wx = i-1;
                     wy = j+1;
                     break;
@@ -666,8 +656,8 @@ public class Main {
             sc++;
         }
 
-        if(warrior[sr][sc].size() > 0){
-            warrior[sr][sc] = new ArrayList<>();
+        if(warrior[sr][sc] > 0){
+            warrior[sr][sc] = 0;
         }
 
         if(sr == er && sc == ec){
