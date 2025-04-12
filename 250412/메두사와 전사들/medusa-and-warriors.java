@@ -135,7 +135,7 @@ public class Main {
                     int down1 = i + 1, down2 = i + 2;
                     int left1 = j - 1, left2 = j-2;
                     int right1 = j + 1, right2 = j + 2;
-                    int dist = Integer.MAX_VALUE;
+                    int dist = Math.abs(sr - i) + Math.abs(sc - j);
 
                     int nextx = i, nexty = j;
                     int can = 0;
@@ -169,14 +169,6 @@ public class Main {
                                     can = 2;
                                 }
                             }
-                            if(isValid2(i, j)){
-                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
-                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
-                                    nextx = i;
-                                    nexty = j;
-                                    can = 0;
-                                }
-                            }
                         }
                     }
 
@@ -200,14 +192,6 @@ public class Main {
                                     nextx = down1;
                                     nexty = right1;
                                     can = 2;
-                                }
-                            }
-                            if(isValid2(i, j)){
-                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
-                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
-                                    nextx = i;
-                                    nexty = j;
-                                    can = 0;
                                 }
                             }
                             if(isValid2(down2, j)){
@@ -235,14 +219,6 @@ public class Main {
                                     can = 2;
                                 }
                             }
-                            if(isValid2(i, j)){
-                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
-                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
-                                    nextx = i;
-                                    nexty = j;
-                                    can = 0;
-                                }
-                            }
                             if(isValid2(up1, left1)){
                                 if(dist > Math.abs(sr - up1) + Math.abs(sc - left1)){
                                     dist = Math.abs(sr - up1) + Math.abs(sc - left1);
@@ -268,14 +244,6 @@ public class Main {
                             nextx = i;
                             nexty = right1;
                             can = 1;
-                            if(isValid2(i, j)){
-                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
-                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
-                                    nextx = i;
-                                    nexty = j;
-                                    can = 0;
-                                }
-                            }
                             if(isValid2(i, right2)){
                                 if(dist > Math.abs(sr - i) + Math.abs(sc - right2)){
                                     dist = Math.abs(sr - i) + Math.abs(sc - right2);
