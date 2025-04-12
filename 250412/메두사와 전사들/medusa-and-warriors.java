@@ -297,7 +297,7 @@ public class Main {
                                     dist = Math.abs(sr - down1) + Math.abs(sc - right1);
                                     nextx = down1;
                                     nexty = right1;
-                                    can = 0;
+                                    can = 2;
                                 }
                             }
                         }
