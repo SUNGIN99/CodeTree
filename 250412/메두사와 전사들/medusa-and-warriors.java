@@ -72,6 +72,7 @@ public class Main {
             */
             
             bfs();
+            //System.out.println(route);
             if(route.equals("")){
                 System.out.println(-1);
                 break;
@@ -80,6 +81,7 @@ public class Main {
             String[] dir = route.split("");
             int pcount = 0;
             for(String d : dir){
+                
                 medusaMove(d);
                 if(pcount == dir.length - 1){
                     
@@ -87,9 +89,18 @@ public class Main {
                 }
 
                 medusaLook();
+                //System.out.println(stonedWarrior);
 
                 warriorMove();
                 pcount++;
+                /*
+                for(int i = 0; i<n; i++){
+                    for(int j = 0; j<n; j++){
+                        System.out.print(warrior[i][j].size());
+                    }
+                    System.out.println();
+                }
+                */
 
                // break;
             }
@@ -108,6 +119,7 @@ public class Main {
             //System.out.println(Arrays.toString(stonedArea[i]));
         }
         
+        //System.out.println(stonedWarrior);
 
         for(int i = 0; i<n; i++){
             for(int j = 0; j<n; j++){
@@ -119,6 +131,7 @@ public class Main {
                         int[] first = firstMove(i, j);
                         int[] second = secondMove(first[0], first[1]);
                         //System.out.println(i+" " + j + " -> " + Arrays.toString(first));
+                        //System.out.println(i+" " + j + " -> " + Arrays.toString(second));
                         int dist1 = Math.abs(i - first[0]) + Math.abs(j - first[1]);
                         int dist2 = Math.abs(i - second[0]) + Math.abs(j - second[1]);
                         if(first[0] == sr && first[1] == sc){
@@ -133,6 +146,10 @@ public class Main {
                         }
 
                         if(first[2] < second[2]){
+                            for(Warrior ws : warrior[i][j]){
+                                ws.x = first[0];
+                                ws.y = first[1];
+                            }
                             movedWarriorCount += warrior[i][j].size();
                             newWarrior[first[0]][first[1]].addAll(warrior[i][j]);
                             continue;
@@ -143,6 +160,10 @@ public class Main {
                         if(second[0] == sr && second[1] == sc){
                             attackedWarriorCount += warrior[i][j].size();
                         }else{
+                            for(Warrior ws : warrior[i][j]){
+                                ws.x = second[0];
+                                ws.y = second[1];
+                            }
                             newWarrior[second[0]][second[1]].addAll(warrior[i][j]);
                         }
                     }
@@ -252,6 +273,8 @@ public class Main {
         for(Warrior w : lookD){
             int x = w.x;
             int y = w.y;
+
+            //System.out.println(warrior[x][y]);
             dCount += warrior[x][y].size();
         }
         for(Warrior w : lookL){
@@ -274,6 +297,7 @@ public class Main {
             choosed = lookD;
             medusaSee = medusaSeeD;
         }
+        //System.out.println(count + ": " + choosed);
         if(count < lCount){
             count = lCount;
             choosed = lookL;
@@ -289,8 +313,8 @@ public class Main {
         for(int i = 0; i<n; i++){
             System.out.println(Arrays.toString(medusaSeeR[i]));
         }
-        System.out.println(count + ": " + choosed);
         */
+        //System.out.println(count + ": " + choosed);
         stonedArea = medusaSee;
         stonedWarrior = new HashSet<>();
         for(Warrior w : choosed){
@@ -447,7 +471,6 @@ public class Main {
                 break;
             }
         }
-        
         
         int range = 0;
         int wx = sr, wy = sc;
