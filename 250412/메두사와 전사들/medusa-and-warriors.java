@@ -102,7 +102,7 @@ public class Main {
                 }
                 */
 
-               // break;
+                //break;
             }
         }
     }
@@ -123,109 +123,204 @@ public class Main {
 
         for(int i = 0; i<n; i++){
             for(int j = 0; j<n; j++){
+                if(warrior[i][j].size() == 0){
+                    continue;
+                }
+
                 if(stonedWarrior.contains(i + " " + j)){
-                    stonedWarriorCount += warrior[i][j].size();
                     newWarrior[i][j].addAll(warrior[i][j]);
+                    stonedWarriorCount += warrior[i][j].size();
                 }else{
-                    if(warrior[i][j].size() > 0){
-                        int[] first = firstMove(i, j);
-                        int[] second = secondMove(first[0], first[1]);
-                        //System.out.println(i+" " + j + " -> " + Arrays.toString(first));
-                        //System.out.println(i+" " + j + " -> " + Arrays.toString(second));
-                        int dist1 = Math.abs(i - first[0]) + Math.abs(j - first[1]);
-                        int dist2 = Math.abs(i - second[0]) + Math.abs(j - second[1]);
-                        if(first[0] == sr && first[1] == sc){
-                            attackedWarriorCount += warrior[i][j].size();
-                            movedWarriorCount += warrior[i][j].size();
-                            continue;
-                        }
+                    int up1 = i - 1, up2 = i - 2;
+                    int down1 = i + 1, down2 = i + 2;
+                    int left1 = j - 1, left2 = j-2;
+                    int right1 = j + 1, right2 = j + 2;
+                    int dist = Integer.MAX_VALUE;
 
-                        if(dist1 == 0){
-                            newWarrior[i][j].addAll(warrior[i][j]);
-                            continue;
-                        }
-
-                        if(first[2] < second[2]){
-                            for(Warrior ws : warrior[i][j]){
-                                ws.x = first[0];
-                                ws.y = first[1];
+                    int nextx = i, nexty = j;
+                    int can = 0;
+                    if(isValid2(up1, j)){
+                        if(dist > Math.abs(sr - up1) + Math.abs(sc - j)){
+                            dist = Math.abs(sr - up1) + Math.abs(sc - j);
+                            nextx = up1;
+                            nexty = j;
+                            can = 1;
+                            if(isValid2(up1, left1)){
+                                if(dist > Math.abs(sr - up1) + Math.abs(sc - left1)){
+                                    dist = Math.abs(sr - up1) + Math.abs(sc - left1);
+                                    nextx = up1;
+                                    nexty = left1;
+                                    can = 2;
+                                }
                             }
-                            movedWarriorCount += warrior[i][j].size();
-                            newWarrior[first[0]][first[1]].addAll(warrior[i][j]);
-                            continue;
-                        }else{
-                            movedWarriorCount += warrior[i][j].size() * dist2;
-                        }
-
-                        if(second[0] == sr && second[1] == sc){
-                            attackedWarriorCount += warrior[i][j].size();
-                        }else{
-                            for(Warrior ws : warrior[i][j]){
-                                ws.x = second[0];
-                                ws.y = second[1];
+                            if(isValid2(up1, right1)){
+                                if(dist > Math.abs(sr - up1) + Math.abs(sc - right1)){
+                                    dist = Math.abs(sr - up1) + Math.abs(sc - right1);
+                                    nextx = up1;
+                                    nexty = right1;
+                                    can = 2;
+                                }
                             }
-                            newWarrior[second[0]][second[1]].addAll(warrior[i][j]);
+                            if(isValid2(up2, j)){
+                                if(dist > Math.abs(sr - up2) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - up2) + Math.abs(sc - j);
+                                    nextx = up2;
+                                    nexty = j;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(i, j)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
+                                    nextx = i;
+                                    nexty = j;
+                                    can = 0;
+                                }
+                            }
                         }
                     }
+
+                    if(isValid2(down1, j)){
+                        if(dist > Math.abs(sr - down1) + Math.abs(sc - j)){
+                            dist = Math.abs(sr - down1) + Math.abs(sc - j);
+                            nextx = down1;
+                            nexty = j;
+                            can = 1;
+                            if(isValid2(down1, left1)){
+                                if(dist > Math.abs(sr - down1) + Math.abs(sc - left1)){
+                                    dist = Math.abs(sr - down1) + Math.abs(sc - left1);
+                                    nextx = down1;
+                                    nexty = left1;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(down1, right1)){
+                                if(dist > Math.abs(sr - down1) + Math.abs(sc - right1)){
+                                    dist = Math.abs(sr - down1) + Math.abs(sc - right1);
+                                    nextx = down1;
+                                    nexty = right1;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(i, j)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
+                                    nextx = i;
+                                    nexty = j;
+                                    can = 0;
+                                }
+                            }
+                            if(isValid2(down2, j)){
+                                if(dist > Math.abs(sr - down2) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - down2) + Math.abs(sc - j);
+                                    nextx = down2;
+                                    nexty = j;
+                                    can = 2;
+                                }
+                            }
+                        }
+                    }
+
+                    if(isValid2(i, left1)){
+                        if(dist > Math.abs(sr - i) + Math.abs(sc - left1)){
+                            dist = Math.abs(sr - i) + Math.abs(sc - left1);
+                            nextx = i;
+                            nexty = left1;
+                            can = 1;
+                            if(isValid2(i, left2)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - left2)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - left2);
+                                    nextx = i;
+                                    nexty = left2;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(i, j)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
+                                    nextx = i;
+                                    nexty = j;
+                                    can = 0;
+                                }
+                            }
+                            if(isValid2(up1, left1)){
+                                if(dist > Math.abs(sr - up1) + Math.abs(sc - left1)){
+                                    dist = Math.abs(sr - up1) + Math.abs(sc - left1);
+                                    nextx = up1;
+                                    nexty = left1;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(down1, left1)){
+                                if(dist > Math.abs(sr - down1) + Math.abs(sc - left1)){
+                                    dist = Math.abs(sr - down1) + Math.abs(sc - left1);
+                                    nextx = down1;
+                                    nexty = left1;
+                                    can = 2;
+                                }
+                            }
+                        }
+                    }
+
+                    if(isValid2(i, right1)){
+                        if(dist > Math.abs(sr - i) + Math.abs(sc - right1)){
+                            dist = Math.abs(sr - i) + Math.abs(sc - right1);
+                            nextx = i;
+                            nexty = right1;
+                            can = 1;
+                            if(isValid2(i, j)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - j)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - j);
+                                    nextx = i;
+                                    nexty = j;
+                                    can = 0;
+                                }
+                            }
+                            if(isValid2(i, right2)){
+                                if(dist > Math.abs(sr - i) + Math.abs(sc - right2)){
+                                    dist = Math.abs(sr - i) + Math.abs(sc - right2);
+                                    nextx = i;
+                                    nexty = right2;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(up1, right1)){
+                                if(dist > Math.abs(sr - up1) + Math.abs(sc - right1)){
+                                    dist = Math.abs(sr - up1) + Math.abs(sc - right1);
+                                    nextx = up1;
+                                    nexty = right1;
+                                    can = 2;
+                                }
+                            }
+                            if(isValid2(down1, right1)){
+                                if(dist > Math.abs(sr - down1) + Math.abs(sc - right1)){
+                                    dist = Math.abs(sr - down1) + Math.abs(sc - right1);
+                                    nextx = down1;
+                                    nexty = right1;
+                                    can = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    if(nextx == sr && nexty == sc){
+                        attackedWarriorCount += warrior[i][j].size();
+                        movedWarriorCount += warrior[i][j].size() * can;
+                    }else{
+                        movedWarriorCount += warrior[i][j].size() * can;
+                        for(Warrior ws : warrior[i][j]){
+                            ws.x = nextx;
+                            ws.y = nexty;
+                        }
+                        newWarrior[nextx][nexty].addAll(warrior[i][j]);
+                    }
+                    //System.out.println (i + ", " + j);
+                    //System.out.println(dist + ", " + nextx + ", " + nexty + ", " + can);
                 }
             }
         }
         warrior = newWarrior;
         System.out.println(movedWarriorCount + " " + stonedWarriorCount + " " + attackedWarriorCount);
-    }
-
-    static int[] secondMove(int x, int y){
-        int upx = x-1;
-        int downx = x + 1;
-        int lefty = y - 1;
-        int righty = y + 1;
-
-        int[][] dist = new int[4][3];
-        dist[2] = new int[]{upx, y, Math.abs(sr - upx) + Math.abs(sc - y)};
-        dist[3] = new int[]{downx, y, Math.abs(sr - downx) + Math.abs(sc - y)};
-        dist[0] = new int[]{x, lefty, Math.abs(sr - x) + Math.abs(sc - lefty)};
-        dist[1] = new int[]{x, righty, Math.abs(sr - x) + Math.abs(sc - righty)};
-
-        int far = -1;
-        int[] toward = new int[3];
-        for(int i = 0; i<4; i++){
-            if(isValid2(dist[i][0], dist[i][1]) && (far == -1 || far > dist[i][2])){
-                far = dist[i][2];
-                toward = dist[i];
-            }
-        }
-
-        if(far == -1){
-            return new int[]{x, y, 0};
-        }
-        return toward;
-    }
-
-    static int[] firstMove(int x, int y){
-        int upx = x-1;
-        int downx = x + 1;
-        int lefty = y - 1;
-        int righty = y + 1;
-
-        int[][] dist = new int[4][3];
-        dist[0] = new int[]{upx, y, Math.abs(sr - upx) + Math.abs(sc - y)};
-        dist[1] = new int[]{downx, y, Math.abs(sr - downx) + Math.abs(sc - y)};
-        dist[2] = new int[]{x, lefty, Math.abs(sr - x) + Math.abs(sc - lefty)};
-        dist[3] = new int[]{x, righty, Math.abs(sr - x) + Math.abs(sc - righty)};
-
-        int far = -1;
-        int[] toward = new int[3];
-        for(int i = 0; i<4; i++){
-            if(isValid2(dist[i][0], dist[i][1]) && (far == -1 || far > dist[i][2])){
-                far = dist[i][2];
-                toward = dist[i];
-            }
-        }
-
-        if(far == -1){
-            return new int[]{x, y, 0};
-        }
-        return toward;
     }
 
     static boolean isValid2(int x, int y){
